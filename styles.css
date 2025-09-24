@@ -2645,7 +2645,7 @@ ul {
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
-  /* text-align: center; */
+  text-align: center;
   transition: all 0.3s ease;
   margin-top: 1rem;
   border: none;
