@@ -1661,7 +1661,7 @@ ul {
   margin-bottom: 0.8rem;
   font-weight: 800;
   line-height: 1.4;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .recommendation-answer {
@@ -1716,11 +1716,11 @@ ul {
   .recommendation-question {
     font-size: 1.5rem;
   }
-  
+
   .recommendation-answer {
     font-size: 1.3rem;
   }
-  
+
   .recommendation-features p {
     font-size: 1.5rem;
   }
@@ -1730,16 +1730,16 @@ ul {
   .recommendation-question {
     font-size: 1.6rem;
   }
-  
+
   .recommendation-answer {
     font-size: 1.3rem;
   }
-  
+
   .recommendation-features p {
     font-size: 1.2rem;
     margin-bottom: 0.2rem;
   }
-  
+
   .recommendation-features i {
     font-size: 1.3rem;
   }
@@ -1750,12 +1750,12 @@ ul {
     font-size: 1.5rem;
     margin-bottom: 0.6rem;
   }
-  
+
   .recommendation-answer {
     font-size: 1.3rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .recommendation-features p {
     font-size: 0.95rem;
     margin-bottom: 0.1rem;
@@ -1932,7 +1932,7 @@ ul {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .section-subtitle {
@@ -1951,7 +1951,7 @@ ul {
   border-top: 1px solid rgba(245, 182, 56, 0.3);
   display: inline-block;
   padding: 1rem 2rem;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
 
@@ -1960,11 +1960,11 @@ ul {
   .section-title {
     font-size: 2rem;
   }
-  
+
   .section-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .package-title {
     font-size: 1.5rem;
     padding: 0.8rem 1.5rem;
@@ -1975,11 +1975,11 @@ ul {
   .section-title {
     font-size: 1.8rem;
   }
-  
+
   .section-subtitle {
     font-size: 1rem;
   }
-  
+
   .package-title {
     font-size: 1.3rem;
     padding: 0.6rem 1.2rem;
@@ -2549,7 +2549,7 @@ ul {
 
 .card-features li i {
   color: #f5b638;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   min-width: 1.2rem;
   text-align: center;
   margin-top: 0.25rem;
@@ -2557,14 +2557,6 @@ ul {
   flex-shrink: 0;
 }
 
-.card-features li:hover {
-  color: #f5b638;
-}
-
-.card-features li:hover i {
-  transform: scale(1.2);
-  color: #ffffff;
-}
 
 /* Responsive adjustments for features */
 @media (max-width: 768px) {
@@ -2617,24 +2609,6 @@ ul {
   font-weight: 700;
 }
 
-.add-to-cart-btn {
-  width: 100%;
-  background: #f5b638;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-  background: #e6a532;
-  transform: translateY(-1px);
-}
-
 .card-cta-button {
   display: inline-block;
   width: 100%;
@@ -2643,7 +2617,7 @@ ul {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-decoration: none;
   text-align: center;
   transition: all 0.3s ease;
@@ -4114,13 +4088,13 @@ button {
   justify-content: center;
   gap: 8px;
   margin-top: 8px;
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-size: 1.1rem;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .installment-text i {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-left: 4px;
 }
 
@@ -4653,5 +4627,62 @@ button {
 @media (max-width: 768px) {
   .pricing-card.small-card {
     max-width: 100%;
+  }
+}
+
+/* ========== SEO INTERNAL LINKS STYLING - DISABLED ========== */
+
+/* Internal SEO Links - HIDDEN */
+.internal-seo-link {
+  display: none !important;
+}
+
+/* SEO Link Wrapper - HIDDEN */
+.seo-link-wrapper {
+  display: none !important;
+}
+
+/* Enhanced styling for feature cards with internal links */
+.feature-card:has(.internal-seo-link) {
+  border-left: 3px solid var(--accent);
+  background: rgba(255, 193, 7, 0.05);
+}
+
+/* Styling for FAQ panels with internal links */
+.accordion-panel:has(.internal-seo-link) {
+  border-right: 2px solid rgba(255, 193, 7, 0.3);
+  background: rgba(255, 193, 7, 0.02);
+}
+
+/* Responsive design for internal links */
+@media (max-width: 768px) {
+  .internal-seo-link {
+    font-size: 0.8em;
+    padding: 1px 3px;
+  }
+
+  .seo-link-wrapper {
+    font-size: 0.8em;
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+}
+
+/* Print styles - hide internal SEO links in print */
+@media print {
+  .internal-seo-link,
+  .seo-link-wrapper {
+    display: none !important;
+  }
+}
+
+/* Enhanced accessibility for screen readers */
+@media (prefers-reduced-motion: reduce) {
+  .internal-seo-link {
+    transition: none;
+  }
+
+  .internal-seo-link:hover {
+    transform: none;
   }
 }

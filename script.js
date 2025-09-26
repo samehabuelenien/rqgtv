@@ -3,14 +3,126 @@
  * Combines all functionality from main.js and inline scripts
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+// ========== SEO & OUTBOUND LINK ENHANCEMENT ==========
+// 
+/**
+ * Enhanced Outbound Link Management
+ * Automatically adds tracking parameters and security attributes
+ */
+function enhanceOutboundLinks() {
+  const outboundLinks = document.querySelectorAll("a[data-out]");
+
+  outboundLinks.forEach((link) => {
+    // Add security attributes
+    link.setAttribute("rel", "noopener");
+    link.setAttribute("target", "_blank");
+
+    // Get current URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentHref = link.getAttribute("href");
+
+    if (!currentHref) return;
+
+    try {
+      const linkUrl = new URL(currentHref);
+
+      // Check for existing ad tracking parameters in current page URL
+      const adParams = ["gclid", "gbraid", "wbraid"];
+      let hasAdParams = false;
+
+      adParams.forEach((param) => {
+        if (urlParams.has(param)) {
+          linkUrl.searchParams.set(param, urlParams.get(param));
+          hasAdParams = true;
+        }
+      });
+
+      // If no ad parameters found, add default UTM tags
+      if (!hasAdParams) {
+        linkUrl.searchParams.set("utm_source", "landing");
+        linkUrl.searchParams.set("utm_medium", "cta");
+        linkUrl.searchParams.set("utm_campaign", "iptv_sa");
+      }
+
+      // Update the link href
+      link.setAttribute("href", linkUrl.toString());
+    } catch (error) {
+      console.warn("Invalid URL in outbound link:", currentHref, error);
+    }
+  });
+}
+
+/**
+ * Add contextual internal links for SEO
+ * DISABLED - Internal SEO links functionality has been turned off
+ */
+function addInternalSEOLinks() {
+  // Internal SEO linking has been disabled
+  // This function now does nothing and returns early
+  return;
+}
+
+/**
+ * Remove existing internal SEO links from the page
+ */
+function removeInternalSEOLinks() {
+  // Remove all internal SEO links
+  const internalLinks = document.querySelectorAll('.internal-seo-link');
+  internalLinks.forEach(link => {
+    link.remove();
+  });
+  
+  // Remove all SEO link wrappers
+  const seoWrappers = document.querySelectorAll('.seo-link-wrapper');
+  seoWrappers.forEach(wrapper => {
+    wrapper.remove();
+  });
+  
+  console.log(`Removed ${internalLinks.length} internal SEO links and ${seoWrappers.length} SEO link wrappers`);
+}
+
+/**
+ * Initialize SEO enhancements
+ */
+function initializeSEOEnhancements() {
+  // Enhance outbound links
+  enhanceOutboundLinks();
+
+  // Remove any existing internal SEO links (functionality disabled)
+  removeInternalSEOLinks();
+  
+  // Internal SEO links are now disabled
+  // addInternalSEOLinks(); // DISABLED
+
+  // Re-run enhancement when new content is dynamically loaded
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+        enhanceOutboundLinks();
+        // Remove any new internal SEO links that might appear
+        removeInternalSEOLinks();
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+// ========== MAIN APPLICATION ==========
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize SEO enhancements first
+  initializeSEOEnhancements();
   // Initialize AOS (Animate On Scroll)
-  if (typeof AOS !== 'undefined') {
+  if (typeof AOS !== "undefined") {
     AOS.init({
       duration: 800,
-      easing: 'ease-in-out',
+      easing: "ease-in-out",
       once: true,
-      offset: 100
+      offset: 100,
     });
   }
 
@@ -25,191 +137,202 @@ document.addEventListener('DOMContentLoaded', function() {
     anchor.addEventListener("click", function (e) {
       const targetId = this.getAttribute("href");
       if (targetId === "#") return;
-      
+
       e.preventDefault();
       const targetElement = document.querySelector(targetId);
 
       if (targetElement) {
         window.scrollTo({
           top: targetElement.offsetTop - 80, // Adjust for fixed header
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     });
   });
 
   // Header and Navigation
-  const header = document.getElementById('header');
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const navMenu = document.getElementById('mainNav');
-  const navLinks = document.querySelectorAll('[data-nav-link]');
-  const backToTopBtn = document.getElementById('backToTop');
-  const ctaButton = document.getElementById('ctaButton');
+  const header = document.getElementById("header");
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const navMenu = document.getElementById("mainNav");
+  const navLinks = document.querySelectorAll("[data-nav-link]");
+  const backToTopBtn = document.getElementById("backToTop");
+  const ctaButton = document.getElementById("ctaButton");
 
   // Mobile menu functionality
   if (mobileMenuBtn && navMenu) {
     const toggleMobileMenu = (isExpanded) => {
-      mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
-      navMenu.classList.toggle('active', isExpanded);
-      mobileMenuBtn.classList.toggle('active', isExpanded);
-      document.body.style.overflow = isExpanded ? 'hidden' : '';
-      
+      mobileMenuBtn.setAttribute("aria-expanded", isExpanded);
+      navMenu.classList.toggle("active", isExpanded);
+      mobileMenuBtn.classList.toggle("active", isExpanded);
+      document.body.style.overflow = isExpanded ? "hidden" : "";
+
       if (isExpanded) {
-        document.addEventListener('keydown', handleEscapeKey);
+        document.addEventListener("keydown", handleEscapeKey);
       } else {
-        document.removeEventListener('keydown', handleEscapeKey);
+        document.removeEventListener("keydown", handleEscapeKey);
       }
     };
-    
+
     const handleEscapeKey = (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
+      if (e.key === "Escape" || e.key === "Esc") {
         toggleMobileMenu(false);
       }
     };
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+
+    mobileMenuBtn.addEventListener("click", () => {
+      const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
       toggleMobileMenu(!isExpanded);
     });
-    
+
     // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const isClickInside = navMenu.contains(e.target) || mobileMenuBtn.contains(e.target);
-      if (!isClickInside && navMenu.classList.contains('active')) {
+    document.addEventListener("click", (e) => {
+      const isClickInside =
+        navMenu.contains(e.target) || mobileMenuBtn.contains(e.target);
+      if (!isClickInside && navMenu.classList.contains("active")) {
         toggleMobileMenu(false);
       }
     });
-    
+
     // Close mobile menu when clicking on a nav link
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
         if (window.innerWidth <= 992) {
           toggleMobileMenu(false);
         }
       });
     });
   }
-  
+
   // Header scroll effect
   if (header) {
     let lastScroll = 0;
     const headerHeight = header.offsetHeight;
     let ticking = false;
-    
+
     const updateHeader = () => {
       const currentScroll = window.pageYOffset;
-      
+
       // Add/remove scrolled class based on scroll position
-      header.classList.toggle('scrolled', currentScroll > 50);
-      
+      header.classList.toggle("scrolled", currentScroll > 50);
+
       // Only run the hide/show logic if not in mobile menu
-      if (!navMenu || !navMenu.classList.contains('active')) {
+      if (!navMenu || !navMenu.classList.contains("active")) {
         // Hide/show header on scroll
         if (currentScroll > lastScroll && currentScroll > headerHeight) {
           // Scrolling down
-          header.classList.add('hide');
+          header.classList.add("hide");
         } else {
           // Scrolling up
-          header.classList.remove('hide');
+          header.classList.remove("hide");
         }
       }
-      
+
       // Show/hide back to top button
       if (backToTopBtn) {
-        backToTopBtn.classList.toggle('show', currentScroll > 300);
+        backToTopBtn.classList.toggle("show", currentScroll > 300);
       }
-      
+
       lastScroll = currentScroll <= 0 ? 0 : currentScroll;
       ticking = false;
     };
-    
+
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(updateHeader);
         ticking = true;
       }
     };
-    
-    window.addEventListener('scroll', onScroll, { passive: true });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     updateHeader(); // Initialize header state
   }
-  
+
   // Back to top button
   if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', (e) => {
+    backToTopBtn.addEventListener("click", (e) => {
       e.preventDefault();
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       // Focus on header for keyboard users
-      const header = document.querySelector('header');
+      const header = document.querySelector("header");
       if (header) {
-        header.setAttribute('tabindex', '-1');
+        header.setAttribute("tabindex", "-1");
         header.focus();
       }
     });
   }
-  
+
   // Set active navigation link based on scroll position
   const setActiveLink = () => {
     const scrollPosition = window.scrollY + 100;
-    
-    document.querySelectorAll('section[id]').forEach(section => {
+
+    document.querySelectorAll("section[id]").forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute('id');
-      
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+      const sectionId = section.getAttribute("id");
+
+      if (
+        scrollPosition >= sectionTop &&
+        scrollPosition < sectionTop + sectionHeight
+      ) {
+        navLinks.forEach((link) => {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === `#${sectionId}`
+          );
         });
       }
     });
   };
-  
+
   // Run on load and scroll
-  window.addEventListener('load', setActiveLink);
-  window.addEventListener('scroll', setActiveLink, { passive: true });
-  
+  window.addEventListener("load", setActiveLink);
+  window.addEventListener("scroll", setActiveLink, { passive: true });
+
   // CTA Button hover effect
   if (ctaButton) {
     const updateCtaHover = (isHovered) => {
-      const icon = ctaButton.querySelector('i');
+      const icon = ctaButton.querySelector("i");
       if (icon) {
-        icon.style.transform = isHovered ? 'translateX(-5px)' : 'translateX(0)';
+        icon.style.transform = isHovered ? "translateX(-5px)" : "translateX(0)";
       }
     };
-    
-    ctaButton.addEventListener('mouseenter', () => updateCtaHover(true));
-    ctaButton.addEventListener('mouseleave', () => updateCtaHover(false));
-    ctaButton.addEventListener('focus', () => updateCtaHover(true));
-    ctaButton.addEventListener('blur', () => updateCtaHover(false));
+
+    ctaButton.addEventListener("mouseenter", () => updateCtaHover(true));
+    ctaButton.addEventListener("mouseleave", () => updateCtaHover(false));
+    ctaButton.addEventListener("focus", () => updateCtaHover(true));
+    ctaButton.addEventListener("blur", () => updateCtaHover(false));
   }
-  
+
   // Add animation to nav items on page load
   if (navLinks.length > 0) {
     navLinks.forEach((link, index) => {
-      link.style.opacity = '0';
-      link.style.transform = 'translateY(10px)';
-      link.style.transition = `opacity 0.3s ease ${index * 0.1}s, transform 0.3s ease ${index * 0.1}s`;
-      
+      link.style.opacity = "0";
+      link.style.transform = "translateY(10px)";
+      link.style.transition = `opacity 0.3s ease ${
+        index * 0.1
+      }s, transform 0.3s ease ${index * 0.1}s`;
+
       // Trigger reflow
       void link.offsetWidth;
-      
-      link.style.opacity = '1';
-      link.style.transform = 'translateY(0)';
+
+      link.style.opacity = "1";
+      link.style.transform = "translateY(0)";
     });
   }
-  
+
   // Handle reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
   if (prefersReducedMotion) {
-    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.style.scrollBehavior = "auto";
   }
 
   // Initialize accordion functionality
-  const accordionItems = document.querySelectorAll('.accordion-item');
+  const accordionItems = document.querySelectorAll(".accordion-item");
 
   accordionItems.forEach((item) => {
     const header = item.querySelector(".accordion-header");
