@@ -2549,7 +2549,7 @@ ul {
 
 .card-features li i {
   color: #f5b638;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   min-width: 1.2rem;
   text-align: center;
   margin-top: 0.25rem;
@@ -2557,14 +2557,6 @@ ul {
   flex-shrink: 0;
 }
 
-.card-features li:hover {
-  color: #f5b638;
-}
-
-.card-features li:hover i {
-  transform: scale(1.2);
-  color: #ffffff;
-}
 
 /* Responsive adjustments for features */
 @media (max-width: 768px) {
@@ -2617,24 +2609,6 @@ ul {
   font-weight: 700;
 }
 
-.add-to-cart-btn {
-  width: 100%;
-  background: #f5b638;
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-  background: #e6a532;
-  transform: translateY(-1px);
-}
-
 .card-cta-button {
   display: inline-block;
   width: 100%;
@@ -2643,7 +2617,7 @@ ul {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-decoration: none;
   text-align: center;
   transition: all 0.3s ease;
@@ -4114,13 +4088,13 @@ button {
   justify-content: center;
   gap: 8px;
   margin-top: 8px;
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-size: 1.1rem;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .installment-text i {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-left: 4px;
 }
 
