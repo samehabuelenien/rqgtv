@@ -1000,7 +1000,7 @@ body.using-mouse .nav-link:focus:not(:focus-visible) {
   display: inline-flex;
   align-items: center;
   margin: 0 2.5rem;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   color: white;
   white-space: nowrap;
   transition: all 0.3s ease;
@@ -1035,7 +1035,7 @@ body.using-mouse .nav-link:focus:not(:focus-visible) {
 @media (max-width: 768px) {
   .ticker-item {
     margin: 0 1.5rem;
-    font-size: 0.85rem;
+    font-size: 1.1rem;
   }
 
   .ticker-item i {
@@ -1054,11 +1054,11 @@ body.using-mouse .nav-link:focus:not(:focus-visible) {
 
   .ticker-item {
     margin: 0 1rem;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
   }
 
   .ticker-item i {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .ticker-content {
@@ -2557,7 +2557,6 @@ ul {
   flex-shrink: 0;
 }
 
-
 /* Responsive adjustments for features */
 @media (max-width: 768px) {
   .card-features li {
@@ -2612,12 +2611,12 @@ ul {
 .card-cta-button {
   display: inline-block;
   width: 100%;
-  background: #f5b638;
+  background: linear-gradient(90deg, #f5b638, #e67e22);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-decoration: none;
   text-align: center;
   transition: all 0.3s ease;
@@ -2628,9 +2627,10 @@ ul {
 }
 
 .card-cta-button:hover {
-  background: #e6a532;
+  color: #e67e22;
+  background: #ffffff9d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(245, 182, 56, 0.3);
+  box-shadow: 0 4px 15px rgba(243, 202, 22, 0.495);
 }
 
 .comparison-button {
@@ -4096,6 +4096,7 @@ button {
 .installment-text i {
   font-size: 1.2rem;
   margin-left: 4px;
+  color: #ffd607;
 }
 
 .pricing-save {
