@@ -430,6 +430,9 @@ function updateCountdown() {
   document.getElementById("minutes").innerHTML = minutes
     .toString()
     .padStart(2, "0");
+  document.getElementById("seconds").innerHTML = seconds
+    .toString()
+    .padStart(2, "0");
 
   if (days < 1) {
     document.querySelector(".countdown").classList.add("animate-pulse");
@@ -458,14 +461,14 @@ window.addEventListener("scroll", toggleBackToTopButton);
 backToTopButton.addEventListener("click", scrollToTop);
 
 window.addEventListener("load", () => {
-  // Initialize countdown timer with a 4-day countdown
+  // Initialize countdown timer with a 7-day countdown
   const countdownContainer = document.querySelector(".cta-timer");
   if (
     countdownContainer &&
     !countdownContainer.getAttribute("data-countdown-date")
   ) {
-    const fourDaysMs = 4 * 24 * 60 * 60 * 1000;
-    const targetDate = new Date(Date.now() + fourDaysMs);
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    const targetDate = new Date(Date.now() + sevenDaysMs);
     countdownContainer.setAttribute(
       "data-countdown-date",
       targetDate.toISOString()
